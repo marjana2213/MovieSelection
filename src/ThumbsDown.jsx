@@ -4,7 +4,7 @@ var Logo2 = require('../src/logos/logo2.png');
 const ThumbsDown = (props) => {
   return (
     <div className='button'>
-      <button onClick={props.onClick}><img src={Logo2} alt=''></img></button>
+      <input type="image" className="sn-section-item" onClick={props.onClick} tabIndex={-1} src={Logo2} alt=""/>
     </div>
   )
 }

@@ -5,19 +5,28 @@ import ThumbsUp from "./ThumbsUp";
 import ThumbsDown from "./ThumbsDown";
 import DescriptionModal from "./DescriptionModal"
 import './index.css';
+import { useSpatnavInitialization, useSection } from '@salutejs/spatial';
 
 const CloseStartModal = () => {
+  let buttons = document.getElementsByClassName('modal_close')
+  for(let i = 0; i < buttons.length; i++) {
+    buttons[i].blur();
+  }
+  
   document.querySelector('#start_modal').classList.remove("open");
 };
 
 function MoviePosters(props) {
+  useSpatnavInitialization();
+  const [sectionProps] = useSection('sectionFirst');
+
   return (
-    <div>
+    <div {...sectionProps}>
       <Header/>
       <div className="container">
         <div className="modal open" id="start_modal">
           <div className="modal_box" id="modal_box">
-            <div className="modal_close" onClick={CloseStartModal}></div>
+            <button className="sn-section-item modal_close" onClick={CloseStartModal} tabIndex={-1}></button>
             <h2>Добро пожаловать!</h2>
             <p>{props.helloModalText}</p>
           </div>

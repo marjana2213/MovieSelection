@@ -18,7 +18,7 @@
 
 .load_back p {
   font-family: font;
-  font-size: min(max(20px, 3.33vw), 100px);
+  font-size: min(max(20px, 3.33vw), 1000px);
 }
 
 body {
@@ -56,7 +56,7 @@ body {
 
 .modal_box {
   position: relative;
-  max-width: min(max(1px, 80vw), 1800px);
+  max-width: min(max(1px, 80vw), 4000px);
   padding: 40px;
   z-index: 5;
   margin: 30px 15px;
@@ -71,7 +71,7 @@ body {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 900;
-  font-size: min(max(15px, 1.3vw), 50px);
+  font-size: min(max(15px, 1.3vw), 1000px);
   color: #333205;
   margin-top: 15px;
   text-align: justify;
@@ -81,7 +81,7 @@ body {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 900;
-  font-size: min(max(20px, 2vw), 60px);
+  font-size: min(max(20px, 2vw), 1500px);
   text-transform: uppercase;
   color: #333205;
   margin-top: 10px;
@@ -95,10 +95,15 @@ body {
   right: 15px;
   cursor: pointer;
   z-index: 2;
-  width: min(max(17px, 1.2vw), 100px);
-  height: min(max(17px, 1.2vw), 100px);
+  width: min(max(17px, 1.2vw), 1000px);
+  height: min(max(17px, 1.2vw), 1000px);
   background-color: #333205;
   clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+}
+
+.modal_close:focus {  
+  outline: none;
+  box-shadow: 0 0 0 min(max(2px, 0.27vw), 100px) lightskyblue;
 }
 
 .modal_close:active {
@@ -116,13 +121,13 @@ body {
   margin: 0;
   font-family: font;
   text-align: center;
-  font-size: min(max(25px, 2.6vw), 200px);
+  font-size: min(max(25px, 2.6vw), 250px);
 }
 
 .header img {
   margin-left: 10px;
-  width: min(max(30px, 2.6vw), 200px);
-  height: min(max(30px, 2.6vw), 200px);
+  width: min(max(30px, 2.6vw), 250px);
+  height: min(max(30px, 2.6vw), 250px);
 }
 
 .container {
@@ -133,13 +138,14 @@ body {
   margin: 0;
   padding: 0;
   height: 95vh;
+  margin-bottom: 15vh;
 }
 
 .square {
-  width: min(max(260px, 31.25vw), 1000px);
-  height: min(max(325px, 39.0625vw), 1250px);
+  width: min(max(240px, 30vw), 3000px);
+  height: min(max(300px, 37.5vw), 3750px);
   background: #f3ea82;
-  border-radius: 30px;
+  border-radius: 1.5625vw;
   margin: 30px;
   position:relative;
   max-height: 85vh;
@@ -148,7 +154,7 @@ body {
 .main_img{
   width:100%;
   height:100%;
-  border-radius: 30px;
+  border-radius: 1.5625vw;
   position: relative;
   z-index: 2;
 }
@@ -162,10 +168,19 @@ body {
   z-index: 5;
 }
 
+.buttonDes_img:active {  
+  width: min(max(30px, 3.3vw), 800px);
+  height: min(max(30px, 3.3vw), 800px); 
+}
+
+.buttonDes_img:focus {  
+  outline: none;
+  box-shadow: 0 0 0 min(max(2px, 0.27vw), 100px) lightskyblue;
+}
+
 .buttonDes_img {
-  width: min(max(30px, 2.6vw), 120px);
-  height: min(max(30px, 2.6vw), 120px); 
-  background: none;
+  width: min(max(30px, 3.5vw), 800px);
+  height: min(max(30px, 3.5vw), 800px); 
 }
 
 .container_button {
@@ -173,34 +188,37 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content:space-between;
-  width: min(max(15px, 5vw), 200px);
+  width: min(max(15px, 5vw), 400px);
   margin: 0;
   padding: 0;
-  margin-left: min(max(0px, 4vw), 150px);
-  margin-right: min(max(0px, 4vw), 150px);
+  margin-left: min(max(0px, 4vw), 300px);
+  margin-right: min(max(0px, 4vw), 300px);
 }
 
 .button {
-  width: min(max(30px, 5.2vw), 200px);
-  height: min(max(30px, 5.2vw), 200px);
+  width: min(max(30px, 5.2vw), 300px);
+  height: min(max(30px, 5.2vw), 300px);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: min(max(30px, 5.2vw), 200px);
-  margin-bottom: min(max(30px, 5.2vw), 200px);
+  margin-top: min(max(30px, 5.2vw), 400px);
+  margin-bottom: min(max(30px, 5.2vw), 400px);
   transform: rotate(90deg);
 }
 
-.button button {
-  background: none;
+.button input {
   border: none;
   width: 100%;
   cursor: pointer;
 }
 
-.button button img {
-  width: 100%;
-  background: none;
+.button input:focus {  
+  outline: none;
+  box-shadow: 0 0 0 min(max(2px, 0.27vw), 100px) lightskyblue;
+}
+
+.button input:active {  
+  width: 98%;
 }
 
 @media (orientation: portrait) {
@@ -234,6 +252,7 @@ body {
   .square {
     width: min(max(100px, 30vh), 500px);
     height: min(max(125px, 38vh), 625px);
+    border-radius: 30px;
   }
   
   .main_img{

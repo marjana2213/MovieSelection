@@ -15,12 +15,24 @@ function App() {
     const [upIndex, setUpIndex] = useState(0);
     const [downIndex, setDownIndex] = useState(1);
 
-    const helloText = "Добро пожаловать в приложение Movie Selection: This One or That One! Вы можете найти фильм по душе, выбрав один из двух предложенных фильмов, основываясь на описании, названии или постере. После выбора фильм остается доступным, а другой фильм меняется на новый. Начните выбирать прямо сейчас!";
+    const helloTextOfficial = "Добро пожаловать в приложение Movie Selection: This One or That One! Вы можете найти фильм по душе, выбрав один из двух предложенных фильмов, основываясь на описании, названии или постере. После выбора фильм остается доступным, а другой фильм меняется на новый. Для того, чтобы увидеть описание фильма - нажмите на кнопку в виде пачки попкорна. Начните выбирать прямо сейчас!";
+    
+    const helloTextNoOfficial = "Привет. Ты в приложении Movie Selection: This One or That One! Тут ты можешь найти фильм по душе, выбрав один из двух предложенных фильмов, основываясь на описании, названии или постере. После выбора фильм остается доступным, а другой фильм меняется на новый. Для того, чтобы увидеть описание фильма - нажми на кнопку в виде пачки попкорна. Начни выбирать прямо сейчас!";
 
     const assistant = initializeAssistant(() => {});
 
     useEffect(() => {
-        assistant.sendData({action: {action_id: "PRINT_TEXT", parameters: {text: helloText}}});
+        assistant.sendData(
+            {
+                action: {
+                    action_id: "PRINT_TEXT", 
+                    parameters: {
+                        textOfficial: helloTextOfficial,
+                        textNoOfficial: helloTextNoOfficial
+                    }
+                }
+            }
+        );
 
         addMovie(2).then((newFilms) => {
             setFilms(newFilms);
@@ -36,17 +48,82 @@ function App() {
         } else if (action == "choose 2") {
             handleUpClick();
         } else if (action == "get name 1") {
-            assistant.sendData({action: {action_id: "PRINT_TEXT", parameters: {text: films[upIndex].name !== null ? films[upIndex].name : "Фильм 1"}}});
+            assistant.sendData(
+                {
+                    action: {
+                        action_id: "PRINT_TEXT", 
+                        parameters: {
+                            textOfficial: films[upIndex].name !== null ? films[upIndex].name : "Фильм 1", 
+                            textNoOfficial: films[upIndex].name !== null ? films[upIndex].name : "Фильм 1"
+                        }
+                    }
+                }
+            );
         } else if (action == "get name 2") {
-            assistant.sendData({action: {action_id: "PRINT_TEXT", parameters: {text: films[downIndex].name !== null ? films[downIndex].name : "Фильм 2"}}});
+            assistant.sendData(
+                {
+                    action: {
+                        action_id: "PRINT_TEXT", 
+                        parameters: {
+                            textOfficial: films[downIndex].name !== null ? films[downIndex].name : "Фильм 2", 
+                            textNoOfficial: films[downIndex].name !== null ? films[downIndex].name : "Фильм 2"
+                        }
+                    }
+                }
+            );
         } else if (action == "get description 1") {
-            assistant.sendData({action: {action_id: "PRINT_TEXT", parameters: {text: films[upIndex].description}}});
+            assistant.sendData(
+                {
+                    action: {
+                        action_id: "PRINT_TEXT", 
+                        parameters: {
+                            textOfficial: films[upIndex].description, 
+                            textNoOfficial: films[upIndex].description
+                        }
+                    }
+                }
+            );
         } else if (action == "get description 2") {
-            assistant.sendData({action: {action_id: "PRINT_TEXT", parameters: {text: films[downIndex].description}}});
+            assistant.sendData(
+                {
+                    action: {
+                        action_id: "PRINT_TEXT", 
+                        parameters: {
+                            textOfficial: films[downIndex].description, 
+                            textNoOfficial: films[downIndex].description
+                        }
+                    }
+                }
+            );
         }
     });
+
+    window.addEventListener('keydown', (event) => {
+        switch(event.code) {
+            case 'Escape':
+                closeAllModal();
+                break;
+            case 'Enter':
+                closeAllModal();
+                break;
+            default:
+                break;
+        }
+    });
+
+    const closeAllModal = () => {
+        let modals = document.getElementsByClassName('modal');
+        for(let i = 0; i < modals.length; i++) {
+            modals[i].classList.remove("open");
+        }
+    };
     
     const handleUpClick = () => {
+        let buttons = document.getElementsByClassName('button')
+        for(let i = 0; i < buttons.length; i++) {
+            buttons[i].children[0].blur();
+        }
+
         let index = Math.max(upIndex, downIndex);
         index += 1;
         setUpIndex(index);
@@ -56,6 +133,11 @@ function App() {
     };
 
     const handleDownClick = () => {
+        let buttons = document.getElementsByClassName('button')
+        for(let i = 0; i < buttons.length; i++) {
+            buttons[i].children[0].blur();
+        }
+        
         let index = Math.max(upIndex, downIndex);
         index += 1;
         setDownIndex(index);
@@ -76,7 +158,7 @@ function App() {
             name2={films[downIndex].name !== null ? films[downIndex].name : "Фильм 2"}
             desc1={films[upIndex].description}
             desc2={films[downIndex].description}
-            helloModalText={helloText}
+            helloModalText={helloTextOfficial}
         />
     ) : (
         <div className='load_back'>
