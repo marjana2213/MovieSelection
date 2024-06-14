@@ -7,26 +7,36 @@ import DescriptionModal from "./DescriptionModal"
 import './index.css';
 import { useSpatnavInitialization, useSection } from '@salutejs/spatial';
 
+var CancleImg = require('../src/logos/cancel.png');
+
 const CloseStartModal = () => {
   let buttons = document.getElementsByClassName('modal_close')
   for(let i = 0; i < buttons.length; i++) {
     buttons[i].blur();
   }
   
-  document.querySelector('#start_modal').classList.remove("open");
+  let modal = document.querySelector('#start_modal');
+  modal.classList.remove("open");
+  modal.querySelector('.modal_close').classList.remove("sn-section-item");
+
+  document.querySelector("#button_down").classList.add("sn-section-item");
+  document.querySelector("#button_up").classList.add("sn-section-item");
+  let buttonsDes = document.getElementsByClassName('buttonDes_img')
+  for(let i = 0; i < buttonsDes.length; i++) {
+    buttonsDes[i].classList.add("sn-section-item");
+  }
 };
 
 function MoviePosters(props) {
-  useSpatnavInitialization();
-  const [sectionProps] = useSection('sectionFirst');
-
+  const [sectionMain] = useSection('sectionMain');
+  
   return (
-    <div {...sectionProps}>
+    <div {...sectionMain}>
       <Header/>
       <div className="container">
         <div className="modal open" id="start_modal">
           <div className="modal_box" id="modal_box">
-            <button className="sn-section-item modal_close" onClick={CloseStartModal} tabIndex={-1}></button>
+            <input type='image' className="sn-section-item modal_close" onClick={CloseStartModal} src={CancleImg} alt="" tabIndex={-1}/>
             <h2>Добро пожаловать!</h2>
             <p>{props.helloModalText}</p>
           </div>

@@ -5,7 +5,7 @@
 
 import axios from "axios";
 
-export const API_TOKEN="9J6XMTD-5TT4V6D-HB4ESD4-DBKST0D";
+export const API_TOKEN="EXFH22N-Q4PMG5S-KWAYNJ8-7FDK6F7";
 
 export function addMovie (limit) {
     const randomPage = Math.floor(Math.random() * 1000);

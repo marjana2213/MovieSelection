@@ -1,53 +1,42 @@
 import MoviePosters from './moviePoster'
 import { addMovie } from './AddMovie'
 import React, { useState, useEffect } from 'react';
-
-import {
-    createAssistant
-} from "@sberdevices/assistant-client"
-
-const initializeAssistant = (getState) => {
-    return createAssistant({getState});
-};
+import { useSpatnavInitialization } from '@salutejs/spatial';
+import { createAssistant } from "@sberdevices/assistant-client"
 
 function App() {
     const [films,setFilms] = useState([]);
     const [upIndex, setUpIndex] = useState(0);
     const [downIndex, setDownIndex] = useState(1);
 
-    const helloTextOfficial = "Добро пожаловать в приложение Movie Selection: This One or That One! Вы можете найти фильм по душе, выбрав один из двух предложенных фильмов, основываясь на описании, названии или постере. После выбора фильм остается доступным, а другой фильм меняется на новый. Для того, чтобы увидеть описание фильма - нажмите на кнопку в виде пачки попкорна. Начните выбирать прямо сейчас!";
-    
-    const helloTextNoOfficial = "Привет. Ты в приложении Movie Selection: This One or That One! Тут ты можешь найти фильм по душе, выбрав один из двух предложенных фильмов, основываясь на описании, названии или постере. После выбора фильм остается доступным, а другой фильм меняется на новый. Для того, чтобы увидеть описание фильма - нажми на кнопку в виде пачки попкорна. Начни выбирать прямо сейчас!";
-
-    const assistant = initializeAssistant(() => {});
+    const helloTextOfficial = "Добро пожаловать в приложение Movie Battle! Вы можете найти фильм по душе, выбрав один из двух предложенных фильмов, основываясь на описании, названии или постере. После выбора фильм остается доступным, а другой фильм меняется на новый. Для того, чтобы увидеть описание фильма - нажмите на кнопку в виде пачки попкорна. Начните выбирать прямо сейчас!";
+    //const helloTextNoOfficial = "Привет. Ты в приложении Movie Battle! Тут ты можешь найти фильм по душе, выбрав один из двух предложенных фильмов, основываясь на описании, названии или постере. После выбора фильм остается доступным, а другой фильм меняется на новый. Для того, чтобы увидеть описание фильма - нажми на кнопку в виде пачки попкорна. Начни выбирать прямо сейчас!";
 
     useEffect(() => {
-        assistant.sendData(
-            {
-                action: {
-                    action_id: "PRINT_TEXT", 
-                    parameters: {
-                        textOfficial: helloTextOfficial,
-                        textNoOfficial: helloTextNoOfficial
-                    }
-                }
-            }
-        );
-
+        let tempFilms = [];
         addMovie(2).then((newFilms) => {
-            setFilms(newFilms);
-            addMovie(10).then((newFilms) => {
-                setFilms(films.concat(newFilms));
+            tempFilms.push(...newFilms);
+            addMovie(10).then((newFilms2) => {
+                tempFilms.push(...newFilms2);
+                setFilms(tempFilms);
             })
         })
     }, []);
 
+    const initializeAssistant = (getState) => {
+        return createAssistant({getState});
+    };
+
+    const assistant = initializeAssistant(() => {});
+
     assistant.on("data", ({action}) => {
-        if(action == "choose 1") {
+        if(action === "choose 1") {
             handleDownClick();
-        } else if (action == "choose 2") {
+        }
+        if (action === "choose 2") {
             handleUpClick();
-        } else if (action == "get name 1") {
+        }
+        if (action === "get name 1") {
             assistant.sendData(
                 {
                     action: {
@@ -59,7 +48,8 @@ function App() {
                     }
                 }
             );
-        } else if (action == "get name 2") {
+        }
+        if (action === "get name 2") {
             assistant.sendData(
                 {
                     action: {
@@ -71,7 +61,8 @@ function App() {
                     }
                 }
             );
-        } else if (action == "get description 1") {
+        }
+        if (action === "get description 1") {
             assistant.sendData(
                 {
                     action: {
@@ -83,7 +74,8 @@ function App() {
                     }
                 }
             );
-        } else if (action == "get description 2") {
+        }
+        if (action === "get description 2") {
             assistant.sendData(
                 {
                     action: {
@@ -100,11 +92,23 @@ function App() {
 
     window.addEventListener('keydown', (event) => {
         switch(event.code) {
+            case 'ArrowDown':
+                
+                break;
+            case 'ArrowUp':
+                
+                break;
+            case 'ArrowLeft':
+                
+                break;
+            case 'ArrowRight':
+                
+                break;
             case 'Escape':
                 closeAllModal();
                 break;
             case 'Enter':
-                closeAllModal();
+                
                 break;
             default:
                 break;
@@ -119,11 +123,6 @@ function App() {
     };
     
     const handleUpClick = () => {
-        let buttons = document.getElementsByClassName('button')
-        for(let i = 0; i < buttons.length; i++) {
-            buttons[i].children[0].blur();
-        }
-
         let index = Math.max(upIndex, downIndex);
         index += 1;
         setUpIndex(index);
@@ -133,11 +132,6 @@ function App() {
     };
 
     const handleDownClick = () => {
-        let buttons = document.getElementsByClassName('button')
-        for(let i = 0; i < buttons.length; i++) {
-            buttons[i].children[0].blur();
-        }
-        
         let index = Math.max(upIndex, downIndex);
         index += 1;
         setDownIndex(index);
@@ -145,6 +139,8 @@ function App() {
             setFilms(films.concat(newFilms));
         });
     };
+
+    useSpatnavInitialization();
 
     return (
     <div>
